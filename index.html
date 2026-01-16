@@ -6,6 +6,7 @@
     <title>Aura | Diagnóstico de Escalamiento 2026</title>
     <link href="https://api.fontshare.com/v2/css?f[]=geist@1,2&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         :root { 
             --primary-text: #1A1A1C;
@@ -13,30 +14,23 @@
             --radius: 20px;
             --gradient: linear-gradient(135deg, #0034EB, #00F3F9, #0A34CD, #425680, #81FFD9);
         }
-
         body { font-family: 'Geist', sans-serif; background-color: var(--bg-body); color: var(--primary-text); margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         .landing-wrapper { width: 100%; min-height: 100vh; background: var(--gradient); background-size: 400% 400%; animation: gradientBG 15s ease infinite; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; box-sizing: border-box; }
         @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-
         .main-title { color: #FFFFFF; text-align: center; max-width: 850px; margin-bottom: 15px; font-size: 38px; font-weight: 800; line-height: 1.1; text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.7); }
         .sub-headline { color: #FFFFFF; text-align: center; max-width: 700px; margin-bottom: 35px; font-size: 20px; font-weight: 400; line-height: 1.4; text-shadow: 1px 3px 8px rgba(0, 0, 0, 0.6); opacity: 0.95; }
-
         .quiz-container { max-width: 650px; width: 100%; background: rgba(255, 255, 255, 0.96); padding: 45px; border-radius: var(--radius); box-shadow: 0 20px 40px rgba(0,0,0,0.2); backdrop-filter: blur(10px); box-sizing: border-box; position: relative; }
         .progress-container { width: 100%; background: #eee; height: 6px; border-radius: 10px; margin-bottom: 30px; }
         .progress-bar { height: 100%; background: var(--gradient); width: 0%; border-radius: 10px; transition: 0.5s; }
-        
         .question, .lead-form, .results { display: none; }
         .active { display: block; animation: fadeIn 0.4s ease-out; }
         .step-title { text-align: center; font-weight: 700; font-size: 24px; margin-bottom: 10px; }
-
         .options { list-style: none; padding: 0; margin: 30px 0; }
         button.option-btn { width: 100%; padding: 22px; border: 1px solid #ddd; border-radius: var(--radius); background: white; cursor: pointer; transition: 0.3s; font-size: 16px; margin-bottom: 12px; color: var(--primary-text); font-family: 'Geist', sans-serif; font-weight: 500; text-align: center; }
         button.option-btn:hover { border-color: #0034EB; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,52,235,0.1); }
-        
         .back-btn { background: transparent; border: none; color: #666; cursor: pointer; font-size: 14px; text-decoration: underline; margin-top: 10px; display: block; width: 100%; text-align: center; }
         input, select { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: var(--radius); font-size: 16px; background: #fff; font-family: 'Geist', sans-serif; box-sizing: border-box; }
         .submit-btn { width: 100%; padding: 18px; background: var(--primary-text); color: white; border: none; border-radius: var(--radius); cursor: pointer; font-weight: 600; font-size: 18px; transition: 0.3s; }
-        
         .opp-counter { font-size: 18px; font-weight: 600; background: #EBF2FF; padding: 20px; border-radius: 15px; margin-bottom: 25px; text-align: center; border: 1px solid #0034EB; color: #0034EB; }
         .opp-number { font-size: 32px; display: block; font-weight: 800; }
         .cta-btn { display: block; text-align: center; margin-top: 20px; padding: 18px; background: var(--gradient); color: white; text-decoration: none; border-radius: var(--radius); font-weight: bold; }
@@ -57,7 +51,7 @@
             <div id="questions-container"></div>
             <div id="lead-form" class="lead-form">
                 <h2 class="step-title">Analizando resultados...</h2>
-                <p style="text-align:center; color:#666;">Completá tus datos para generar tu reporte de visión 2026.</p>
+                <p style="text-align:center; color:#666;">Ingresá tus datos para recibir tu diagnóstico automáticamente.</p>
                 <input type="text" id="userName" placeholder="Nombre completo" required>
                 <input type="email" id="userEmail" placeholder="Email corporativo" required>
                 <input type="text" id="userCompany" placeholder="Empresa" required>
@@ -78,8 +72,8 @@
                 <h2 id="final-title" class="step-title">Diagnóstico Finalizado</h2>
                 <div id="opp-box" class="opp-counter">Identificamos <span id="opp-count" class="opp-number">0</span> oportunidades de mejora inmediata.</div>
                 <p id="final-desc" style="text-align:center; color:#555; margin-bottom:20px;"></p>
-                <button id="pdf-btn" class="submit-btn" style="background:#444;" onclick="generatePDF()">📥 Descargar Informe Especial (PDF)</button>
-                <a href="https://cal.com/gonzalo-izquierdo-brown/30min" target="_blank" class="cta-btn">Agendar llamada estratégica</a>
+                <button id="pdf-btn" class="submit-btn" style="background:#444;" onclick="generatePDF()">📥 Descargar y enviar Diagnóstico (PDF)</button>
+                <a href="https://cal.com/gonzalo-izquierdo-brown/30min" target="_blank" class="cta-btn">Agendar llamada de asesoría gratuita</a>
             </div>
         </div>
         <div class="footer-logo"><img src="image_1.png" alt="Aura Logo"></div>
@@ -87,12 +81,15 @@
 </div>
 
 <script>
+    // Inicializar EmailJS (Reemplazar con tu Public Key)
+    (function() { emailjs.init("TU_PUBLIC_KEY"); })();
+
     const questions = [
-        { title: "Dependencia humana crítica", q: "¿La operación diaria depende totalmente de tu supervisión constante o de la memoria del equipo?", ansYes: "Sí, depende de nuestra presencia o memoria", ansNo: "No, los procesos fluyen de forma independiente", problem: "El negocio depende excesivamente de la intervención directa. La falta de procesos institucionalizados impide delegar y escalar.", opp: "Lograr que el negocio funcione de forma autónoma, recuperando tu libertad para liderar la estrategia." },
-        { title: "Fricción operativa", q: "¿Sienten que pierden tiempo valioso en tareas repetitivas o cargando datos a mano?", ansYes: "Sí, perdemos tiempo en cargas administrativas", ansNo: "Nuestros procesos están automatizados", problem: "Se desperdicia capacidad productiva en tareas que no generan valor comercial real.", opp: "Liberar el tiempo de tu equipo para que se enfoque exclusivamente en el crecimiento y la atención al cliente." },
-        { title: "Fragmentación de información", q: "¿La información crítica vive en distintos archivos o herramientas que no se conectan?", ansYes: "Sí, la información está dispersa", ansNo: "Tenemos todo centralizado y conectado", problem: "Tener datos fragmentados aumenta drásticamente el margen de error y obliga a duplicar gestiones.", opp: "Unificar la operación para tener claridad total sobre cada área del negocio en tiempo real." },
-        { title: "Déficit de control estratégico", q: "¿Es difícil obtener datos de stock o rentabilidad al instante sin procesos manuales?", ansYes: "Es difícil ver los números hoy mismo", ansNo: "Vemos el estado del negocio al instante", problem: "Gestionar sin datos actualizados impide una reacción ágil ante cambios del mercado.", opp: "Implementar visibilidad automática para tomar decisiones basadas en la realidad y no en estimaciones." },
-        { title: "Tope Operativo alcanzado", q: "¿Viven 'apagando incendios' operativos en lugar de planificar el crecimiento?", ansYes: "Sí, vivimos resolviendo urgencias diarias", ansNo: "Estamos enfocados en escalar el negocio", problem: "La estructura actual consume toda la energía en el 'día a día', bloqueando cualquier expansión proyectada.", opp: "Construir una base técnica que absorba la carga operativa y habilite un crecimiento ordenado." }
+        { title: "Dependencia humana crítica", q: "¿La operación diaria depende totalmente de tu supervisión constante o de la memoria del equipo?", ansYes: "Sí, depende de nuestra presencia o memoria", ansNo: "No, los procesos fluyen de forma independiente", problem: "El negocio depende de personas y no de procesos documentados. Esto impide delegar con seguridad y frena el crecimiento sostenible.", opp: "Lograr que la empresa funcione sin depender de vos, permitiéndote recuperar tiempo para la dirección estratégica." },
+        { title: "Fricción operativa", q: "¿Sienten que pierden tiempo valioso en tareas repetitivas o cargando datos a mano?", ansYes: "Sí, perdemos tiempo en cargas administrativas", ansNo: "Nuestros procesos están automatizados", problem: "Se desperdicia energía y dinero en tareas de carga que no agregan valor real al crecimiento de la empresa.", opp: "Liberar la capacidad de tu equipo para que se enfoque en vender más o en mejorar la atención al cliente." },
+        { title: "Fragmentación de información", q: "¿La información crítica vive en distintos archivos o herramientas que no se conectan?", ansYes: "Sí, la información está dispersa", ansNo: "Tenemos todo centralizado y conectado", problem: "La desarticulación de datos aumenta el riesgo de errores costosos y obliga a duplicar el trabajo administrativo.", opp: "Unificar la operación para tener una visión integral de todo el negocio en un solo lugar y sin errores manuales." },
+        { title: "Déficit de control estratégico", q: "¿Es difícil obtener datos de stock o rentabilidad al instante sin procesos manuales?", ansYes: "Es difícil ver los números hoy mismo", ansNo: "Vemos el estado del negocio al instante", problem: "Gestionar sin datos al día hace que sea imposible reaccionar rápido a los cambios del mercado y genera una toma de decisiones incierta.", opp: "Contar con tableros de control que muestren la salud real de la empresa para liderar con total previsibilidad." },
+        { title: "Tope Operativo", q: "¿Viven 'apagando incendios' operativos en lugar de planificar el crecimiento?", ansYes: "Sí, vivimos resolviendo urgencias diarias", ansNo: "Estamos enfocados en escalar el negocio", problem: "La estructura actual ya no soporta más carga. Las urgencias consumen la energía necesaria para planificar la expansión.", opp: "Construir una base tecnológica que absorba el trabajo pesado y habilite un crecimiento ordenado y sin caos." }
     ];
 
     let currentStep = 0; let score = 0; let userRisksIndexes = [];
@@ -114,17 +111,15 @@
         document.getElementById('lead-form').classList.remove('active');
         document.getElementById('results').classList.add('active');
         updateProgressBar(questions.length + 1);
-
         const oppBox = document.getElementById('opp-box');
         const desc = document.getElementById('final-desc');
         const fTitle = document.getElementById('final-title');
-
         if(score > 0) {
             document.getElementById('opp-count').innerText = score;
             desc.innerText = "Tu operativa presenta desafíos que podrían detener tu escalamiento este 2026. Aura puede ayudarte a destrabarlos.";
         } else {
             fTitle.innerText = "Operación de Alto Rendimiento Detectada";
-            oppBox.innerHTML = "Tu base operativa es sólida y está bajo control. Estás en el momento ideal para la <strong>innovación estratégica</strong>.";
+            oppBox.innerHTML = "Tu base operativa es sólida y está bajo control. Estás en el momento ideal para la innovación estratégica.";
             desc.innerText = "Has superado la etapa de desorden inicial. El desafío ahora es cómo usar la tecnología para multiplicar tus ingresos.";
         }
     }
@@ -135,77 +130,87 @@
         const name = document.getElementById('userName').value;
         const industry = document.getElementById('userIndustry').value;
 
+        // Estilo Header
         doc.setFont("helvetica", "bold"); doc.setFontSize(22); doc.text(score > 0 ? "Diagnóstico de Tope Operativo 2026" : "Visión de Innovación Estratégica 2026", 20, 25);
         doc.setFontSize(10); doc.setFont("helvetica", "normal"); doc.text(`Aura Partner Tecnológico | Preparado para: ${name} | Empresa: ${company}`, 20, 33);
         doc.setDrawColor(0, 52, 235); doc.line(20, 38, 190, 38);
 
         let y = 55;
-
         if(score > 0) {
             doc.setFontSize(14); doc.setFont("helvetica", "bold"); doc.text("1. Puntos de Mejora Operativa:", 20, y);
             y += 10;
             userRisksIndexes.forEach(idx => {
                 const item = questions[idx];
                 doc.setFontSize(11); doc.setTextColor(0); doc.setFont("helvetica", "bold"); doc.text(item.title, 20, y); y += 4;
-                // Caja Naranja Redondeada
                 doc.setDrawColor(255, 140, 0); doc.setFillColor(255, 245, 230); doc.roundedRect(20, y, 170, 16, 3, 3, 'F');
                 doc.setFontSize(9); doc.setTextColor(150, 80, 0); doc.text("Situación detectada:", 25, y + 6);
                 doc.setFont("helvetica", "normal"); doc.text(doc.splitTextToSize(item.problem, 150), 25, y + 10);
                 y += 18;
-                // Caja Verde Redondeada
                 doc.setDrawColor(30, 126, 52); doc.setFillColor(240, 250, 240); doc.roundedRect(20, y, 170, 16, 3, 3, 'F');
                 doc.setTextColor(30, 80, 30); doc.setFont("helvetica", "bold"); doc.text("Oportunidad:", 25, y + 6);
                 doc.setFont("helvetica", "normal"); doc.text(doc.splitTextToSize(item.opp, 150), 25, y + 10);
                 y += 22;
                 if(y > 250) { doc.addPage(); y = 20; }
             });
-        } else {
-            doc.setFontSize(14); doc.setFont("helvetica", "bold"); doc.text("1. Estado de Madurez Operativa:", 20, y);
-            y += 10; doc.setFontSize(10); doc.setFont("helvetica", "normal");
-            const perfectText = "Tu empresa ha superado el tope operativo inicial. Contás con una estructura ordenada y procesos claros. Esto te posiciona para construir activos tecnológicos que generen nuevas ventajas competitivas y escalen tu facturación.";
-            doc.text(doc.splitTextToSize(perfectText, 170), 20, y); y += 35;
         }
 
-        // SECCIÓN DE BUENAS PRÁCTICAS POR RUBRO
-        if(y > 220) { doc.addPage(); y = 20; } else { y += 10; }
+        // BUENAS PRÁCTICAS EXPLAYADAS [cite: 501, 518]
+        if(y > 200) { doc.addPage(); y = 20; } else { y += 10; }
         doc.setTextColor(0); doc.setFontSize(14); doc.setFont("helvetica", "bold");
-        doc.text(`2. Buenas Prácticas Sugeridas para ${industry}:`, 20, y); y += 10;
+        doc.text(`2. Buenas Prácticas de Escalamiento para ${industry}:`, 20, y); y += 10;
         doc.setFontSize(10); doc.setFont("helvetica", "normal");
         
         let practices = [];
         switch(industry) {
-            case "Agro": practices = ["- Implementar registro offline en campo para eliminar la carga manual posterior.", "- Centralizar la trazabilidad de insumos para predecir rindes con exactitud.", "- Automatizar el reporte de novedades diarias para liberar tiempo de supervisión."]; break;
-            case "Juridico": practices = ["- Sincronizar expedientes con portales judiciales para evitar chequeos manuales.", "- Automatizar la generación documental basada en plantillas inteligentes.", "- Centralizar el flujo de plazos y tareas para eliminar la dependencia de la memoria."]; break;
-            case "Logistica": practices = ["- Centralizar el tracking de flota y stock en un solo dashboard de control.", "- Digitalizar la carga de hojas de ruta para reducir errores de comunicación.", "- Implementar alertas automáticas de mantenimiento preventivo de unidades."]; break;
-            case "Retail": practices = ["- Unificar el stock de canales online y físicos para evitar ventas sin disponibilidad.", "- Centralizar la base de clientes para personalizar ofertas y aumentar la recompra.", "- Automatizar el flujo de pedidos para acelerar los tiempos de despacho."]; break;
-            default: practices = ["- Eliminar las 'islas de información' conectando ventas con administración.", "- Digitalizar procesos repetitivos que hoy consumen horas del equipo calificado.", "- Implementar visibilidad automática sobre los KPIs de rentabilidad del negocio."]; break;
+            case "Agro": practices = [
+                "Digitalización de la trazabilidad en campo: El mayor dolor del agro es la pérdida de datos entre el lote y la oficina. Implementar un registro digital offline elimina la carga manual posterior, asegurando que cada aplicación e insumo sea registrado en el acto para predecir rindes con exactitud quirúrgica.",
+                "Centralización del stock operativo: Dejar de depender de planillas aisladas para el control de insumos y plantines reduce mermas invisibles. Un sistema único permite ver el negocio de forma integral y consistente desde cualquier lugar."
+            ]; break;
+            case "Juridico": practices = [
+                "Automatización del flujo documental: El tiempo del abogado se diluye en redactar escritos repetitivos. Generar tecnología a medida que cree borradores automáticos basados en la lógica real de tus expedientes libera tiempo operativo para el análisis de casos complejos.",
+                "Sincronización judicial automática: Eliminar el chequeo manual diario de portales evita errores humanos y dependencia del seguimiento manual, asegurando que ningún plazo quede librado a la memoria del equipo."
+            ]; break;
+            case "Logistica": practices = [
+                "Visibilidad en tiempo real (Control Tower): La falta de trazabilidad genera ineficiencias de costos. Centralizar el tracking de flota y el estado de los pedidos en un solo tablero permite tomar decisiones estratégicas basadas en datos y no en suposiciones.",
+                "Automatización de la administración de flota: Digitalizar los registros de mantenimiento y hojas de ruta reduce la fricción operativa y acelera la coordinación entre el depósito y el transporte."
+            ]; break;
+            default: practices = [
+                "Eliminación de islas de información: El mayor techo operativo de las Pymes es tener ventas, stock y administración en silos que no se hablan. Conectar estas áreas en un sistema de gestión unificado permite ver el negocio como un todo.",
+                "Automatización de flujos repetitivos: Reducir la intervención manual en tareas de coordinación entre áreas disminuye errores y tiempos muertos, permitiendo que la empresa escale sin necesidad de contratar más personal administrativo."
+            ]; break;
         }
-        practices.forEach(p => { doc.text(p, 25, y); y += 7; });
+        practices.forEach(p => { 
+            const lines = doc.splitTextToSize(p, 170);
+            doc.text(lines, 20, y); y += (lines.length * 5) + 5;
+        });
 
-        // METODOLOGÍA AURA
-        y += 15; doc.setFontSize(14); doc.setFont("helvetica", "bold"); doc.text("3. Metodología de Trabajo Aura:", 20, y); y += 10;
-        
+        // METODOLOGÍA AURA [cite: 520-528]
+        if(y > 200) { doc.addPage(); y = 20; } else { y += 10; }
+        doc.setFontSize(14); doc.setFont("helvetica", "bold"); doc.text("3. Metodología de Trabajo Aura:", 20, y); y += 10;
         const steps = [
-            { label: "1. Diagnóstico del Tope Operativo", color: [0, 52, 235], desc: "Analizamos cómo funciona hoy el negocio e identificamos los puntos donde deja de escalar." },
-            { label: "2. Diseño de la Solución Estratégica", color: [66, 86, 128], desc: "Definimos los procesos y la tecnología alineada a tu lógica comercial real." },
-            { label: "3. Desarrollo e Implementación", color: [129, 255, 217], desc: "Construimos el software y aseguramos que genere un impacto positivo inmediato." }
+            { label: "1. Diagnóstico del Tope Operativo", color: [0, 52, 235], desc: "Analizamos el funcionamiento actual e identificamos dónde la operación deja de escalar." },
+            { label: "2. Diseño de la Solución Estratégica", color: [66, 86, 128], desc: "Definimos procesos y tecnología alineada a la lógica comercial real de tu negocio." },
+            { label: "3. Desarrollo e Implementación", color: [129, 255, 217], desc: "Construimos el software a medida y aseguramos que genere un impacto positivo inmediato." }
         ];
-
         steps.forEach((s, i) => {
-            doc.setFillColor(s.color[0], s.color[1], s.color[2]); 
-            doc.roundedRect(20, y, 170, 18, 4, 4, 'F');
+            doc.setFillColor(s.color[0], s.color[1], s.color[2]); doc.roundedRect(20, y, 170, 18, 4, 4, 'F');
             doc.setTextColor(i === 2 ? 26 : 255); doc.setFontSize(11); doc.setFont("helvetica", "bold");
             doc.text(s.label, 25, y + 7);
-            doc.setFontSize(9); doc.setFont("helvetica", "normal");
-            doc.text(s.desc, 25, y + 13);
+            doc.setFontSize(9); doc.setFont("helvetica", "normal"); doc.text(s.desc, 25, y + 13);
             y += 23;
         });
 
-        y += 15; doc.setFillColor(235, 242, 255); doc.roundedRect(20, y, 170, 25, 5, 5, 'F');
+        // CTA CALENDARIO
+        y += 10; doc.setFillColor(235, 242, 255); doc.roundedRect(20, y, 170, 25, 5, 5, 'F');
         doc.setFontSize(11); doc.setTextColor(0, 52, 235); doc.setFont("helvetica", "bold");
-        doc.text("Agendá tu asesoría técnica gratuita con Gonzalo Brown:", 30, y + 10);
+        doc.text("Agendá tu asesoría técnica gratuita aquí:", 30, y + 10);
         doc.setFontSize(9); doc.text("https://cal.com/gonzalo-izquierdo-brown/30min", 30, y + 17);
-        doc.save(`Diagnostico_Aura_${company}.pdf`);
+        
+        doc.save(`Diagnostico_Aura_2026.pdf`);
+
+        // Simular envío de email con EmailJS
+        const templateParams = { user_name: name, user_email: document.getElementById('userEmail').value, company: company };
+        // emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams).then(...);
     }
 </script>
 </body>
