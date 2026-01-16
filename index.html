@@ -57,7 +57,7 @@
             <div id="questions-container"></div>
             <div id="lead-form" class="lead-form">
                 <h2 class="step-title">Analizando resultados...</h2>
-                <p style="text-align:center; color:#666;">Completá tus datos para generar el Informe de Tope Operativo.</p>
+                <p style="text-align:center; color:#666;">Completá tus datos para generar tu reporte de visión 2026.</p>
                 <input type="text" id="userName" placeholder="Nombre completo" required>
                 <input type="email" id="userEmail" placeholder="Email corporativo" required>
                 <input type="text" id="userCompany" placeholder="Empresa" required>
@@ -75,10 +75,11 @@
             </div>
 
             <div id="results" class="results">
-                <h2 class="step-title">Diagnóstico Finalizado</h2>
-                <div class="opp-counter">Identificamos <span id="opp-count" class="opp-number">0</span> oportunidades de mejora en tu operativa actual.</div>
-                <button class="submit-btn" style="background:#444;" onclick="generatePDF()">📥 Descargar Informe Completo (PDF)</button>
-                <a href="https://cal.com/gonzalo-izquierdo-brown/30min" target="_blank" class="cta-btn">Agendar llamada de asesoría</a>
+                <h2 id="final-title" class="step-title">Diagnóstico Finalizado</h2>
+                <div id="opp-box" class="opp-counter">Identificamos <span id="opp-count" class="opp-number">0</span> oportunidades de mejora inmediata.</div>
+                <p id="final-desc" style="text-align:center; color:#555; margin-bottom:20px;"></p>
+                <button id="pdf-btn" class="submit-btn" style="background:#444;" onclick="generatePDF()">📥 Descargar Informe Especial (PDF)</button>
+                <a href="https://cal.com/gonzalo-izquierdo-brown/30min" target="_blank" class="cta-btn">Agendar llamada estratégica</a>
             </div>
         </div>
         <div class="footer-logo"><img src="image_1.png" alt="Aura Logo"></div>
@@ -87,46 +88,11 @@
 
 <script>
     const questions = [
-        { 
-            title: "Dependencia humana crítica",
-            q: "¿La operación diaria depende totalmente de tu supervisión o de la memoria del equipo?", 
-            ansYes: "Sí, depende de nuestra presencia física o memoria", 
-            ansNo: "No, los procesos fluyen solos", 
-            problem: "La empresa depende críticamente de personas específicas. La falta de procesos automáticos impide delegar con seguridad y frena el crecimiento sostenible.", 
-            opp: "Institucionalizar el conocimiento en procesos digitales para que el negocio funcione sin tu presencia constante, recuperando tiempo directivo." 
-        },
-        { 
-            title: "Fricción operativa",
-            q: "¿Sienten que pierden tiempo valioso en tareas repetitivas o cargando datos a mano?", 
-            ansYes: "Sí, perdemos tiempo en tareas administrativas", 
-            ansNo: "Nuestros procesos están automatizados", 
-            problem: "Se desperdicia energía y presupuesto en tareas de carga manual que no agregan valor real al core del negocio.", 
-            opp: "Liberar la capacidad operativa del equipo para que se enfoque en la expansión comercial o en la mejora del servicio al cliente." 
-        },
-        { 
-            title: "Fragmentación de información",
-            q: "¿La información crítica vive en distintos archivos o herramientas que no se conectan?", 
-            ansYes: "Sí, la información está dispersa", 
-            ansNo: "Tenemos todo centralizado y conectado", 
-            problem: "La desarticulación de datos aumenta el riesgo de errores costosos y obliga a duplicar el trabajo administrativo diario.", 
-            opp: "Unificar la operación para obtener una visión integral del negocio en tiempo real, eliminando el margen de error manual." 
-        },
-        { 
-            title: "Déficit de control estratégico",
-            q: "¿Es difícil obtener datos de stock o rentabilidad al instante sin procesos manuales?", 
-            ansYes: "Sí, es difícil ver los números hoy mismo", 
-            ansNo: "Vemos el estado del negocio al instante", 
-            problem: "Gestionar sin datos actualizados impide reaccionar con rapidez a los cambios del mercado y genera una toma de decisiones a ciegas.", 
-            opp: "Contar con tableros de control automáticos que muestren la salud real de la empresa para liderar con total previsibilidad." 
-        },
-        { 
-            title: "Tope Operativo",
-            q: "¿Viven 'apagando incendios' operativos en lugar de planificar el crecimiento?", 
-            ansYes: "Sí, vivimos resolviendo urgencias diarias", 
-            ansNo: "Estamos enfocados en escalar el negocio", 
-            problem: "La estructura actual ya no soporta más carga de trabajo. Las urgencias consumen la energía necesaria para planificar el escalamiento.", 
-            opp: "Construir una base tecnológica sólida que absorba el trabajo pesado y habilite una expansión ordenada y sin caos administrativo." 
-        }
+        { title: "Dependencia humana crítica", q: "¿La operación diaria depende totalmente de tu supervisión constante o de la memoria del equipo?", ansYes: "Sí, depende de nuestra presencia o memoria", ansNo: "No, los procesos fluyen de forma independiente", problem: "El negocio depende de personas y no de procesos documentados. Esto impide delegar con seguridad y frena el crecimiento sostenible.", opp: "Lograr que la empresa funcione sin depender de vos, permitiéndote recuperar tiempo para la dirección estratégica." },
+        { title: "Fricción operativa", q: "¿Sienten que pierden tiempo valioso en tareas repetitivas o cargando datos a mano?", ansYes: "Sí, perdemos tiempo en cargas administrativas", ansNo: "Nuestros procesos están automatizados", problem: "Se desperdicia energía y dinero en tareas de carga que no agregan valor real al crecimiento de la empresa.", opp: "Liberar la capacidad de tu equipo para que se enfoque en vender más o en mejorar la atención al cliente." },
+        { title: "Fragmentación de información", q: "¿La información crítica vive en distintos archivos o herramientas que no se conectan?", ansYes: "Sí, la información está dispersa", ansNo: "Tenemos todo centralizado y conectado", problem: "La desarticulación de datos aumenta el riesgo de errores costosos y obliga a duplicar el trabajo administrativo.", opp: "Unificar la operación para tener una visión integral de todo el negocio en un solo lugar y sin errores manuales." },
+        { title: "Déficit de control estratégico", q: "¿Es difícil obtener datos de stock o rentabilidad al instante sin procesos manuales?", ansYes: "Es difícil ver los números hoy mismo", ansNo: "Vemos el estado del negocio al instante", problem: "Gestionar sin datos al día hace que sea imposible reaccionar rápido a los cambios del mercado y genera una toma de decisiones incierta.", opp: "Contar con tableros de control que muestren la salud real de la empresa para liderar con total previsibilidad." },
+        { title: "Tope Operativo", q: "¿Viven 'apagando incendios' operativos en lugar de planificar el crecimiento?", ansYes: "Sí, vivimos resolviendo urgencias diarias", ansNo: "Estamos enfocados en escalar el negocio", problem: "La estructura actual ya no soporta más carga. Las urgencias consumen la energía necesaria para planificar la expansión.", opp: "Construir una base tecnológica que absorba el trabajo pesado y habilite un crecimiento ordenado y sin caos." }
     ];
 
     let currentStep = 0; let score = 0; let userRisksIndexes = [];
@@ -142,7 +108,26 @@
     function updateProgressBar(step) { document.getElementById('progressBar').style.width = ((step) / (questions.length + 1)) * 100 + "%"; }
     function answer(index, isRisk) { if(isRisk) { score++; userRisksIndexes.push(index); } document.getElementById(`q-${index}`).classList.remove('active'); currentStep = index + 1; updateProgressBar(currentStep); if(currentStep < questions.length) { document.getElementById(`q-${currentStep}`).classList.add('active'); } else { document.getElementById('lead-form').classList.add('active'); } }
     function prevStep(currentId, targetIndex) { document.getElementById(currentId).classList.remove('active'); document.getElementById(`q-${targetIndex}`).classList.add('active'); if (userRisksIndexes.includes(targetIndex)) { score--; userRisksIndexes = userRisksIndexes.filter(i => i !== targetIndex); } currentStep = targetIndex; updateProgressBar(currentStep); }
-    function processResults() { if(!document.getElementById('userName').value) return alert("Por favor completá tus datos."); document.getElementById('lead-form').classList.remove('active'); document.getElementById('results').classList.add('active'); document.getElementById('opp-count').innerText = score; updateProgressBar(questions.length + 1); }
+
+    function processResults() {
+        if(!document.getElementById('userName').value) return alert("Por favor completá tus datos.");
+        document.getElementById('lead-form').classList.remove('active');
+        document.getElementById('results').classList.add('active');
+        updateProgressBar(questions.length + 1);
+
+        const oppBox = document.getElementById('opp-box');
+        const desc = document.getElementById('final-desc');
+        const fTitle = document.getElementById('final-title');
+
+        if(score > 0) {
+            document.getElementById('opp-count').innerText = score;
+            desc.innerText = "Tu operativa presenta desafíos que podrían detener tu escalamiento este 2026. Aura puede ayudarte a destrabarlos.";
+        } else {
+            fTitle.innerText = "Operación de Alto Rendimiento Detectada";
+            oppBox.innerHTML = "Tu base operativa es sólida y está bajo control. Estás en el momento ideal para la <strong>innovación estratégica</strong>.";
+            desc.innerText = "Has superado la etapa de desorden inicial. El desafío ahora es cómo usar la tecnología para multiplicar tus ingresos, no solo para gestionar.";
+        }
+    }
 
     function generatePDF() {
         const { jsPDF } = window.jspdf; const doc = new jsPDF();
@@ -150,46 +135,50 @@
         const name = document.getElementById('userName').value;
         const industry = document.getElementById('userIndustry').value;
 
-        doc.setFont("helvetica", "bold"); doc.setFontSize(22); doc.text("Informe de Tope Operativo 2026", 20, 25);
+        doc.setFont("helvetica", "bold"); doc.setFontSize(22); doc.text(score > 0 ? "Informe de Tope Operativo 2026" : "Informe de Madurez y Visión 2026", 20, 25);
         doc.setFontSize(10); doc.setFont("helvetica", "normal"); doc.text(`Aura Partner Tecnológico | Preparado para: ${name} | Empresa: ${company}`, 20, 33);
         doc.setDrawColor(0, 52, 235); doc.line(20, 38, 190, 38);
 
         let y = 55;
-        doc.setFontSize(14); doc.setFont("helvetica", "bold"); doc.text("Diagnóstico de Puntos de Mejora:", 20, y);
-        y += 10;
 
-        userRisksIndexes.forEach(idx => {
-            const item = questions[idx];
-            doc.setFontSize(11); doc.setTextColor(0); doc.setFont("helvetica", "bold");
-            doc.text(item.title, 20, y);
-            y += 4;
-            // Recuadro Naranja (Problema)
-            doc.setDrawColor(255, 140, 0); doc.setFillColor(255, 245, 230); doc.rect(20, y, 170, 15, 'F');
-            doc.setFontSize(9); doc.setTextColor(150, 80, 0); doc.setFont("helvetica", "bold");
-            doc.text("Situación crítica:", 25, y + 6);
-            doc.setFont("helvetica", "normal"); doc.text(doc.splitTextToSize(item.problem, 150), 25, y + 10);
-            y += 18;
-            // Recuadro Verde (Oportunidad)
-            doc.setDrawColor(30, 126, 52); doc.setFillColor(240, 250, 240); doc.rect(20, y, 170, 15, 'F');
-            doc.setTextColor(30, 80, 30); doc.setFont("helvetica", "bold");
-            doc.text("Oportunidad:", 25, y + 6);
-            doc.setFont("helvetica", "normal"); doc.text(doc.splitTextToSize(item.opp, 150), 25, y + 10);
-            y += 25;
-            if(y > 250) { doc.addPage(); y = 20; }
-        });
+        if(score > 0) {
+            doc.setFontSize(14); doc.setFont("helvetica", "bold"); doc.text("Puntos de Mejora Operativa Identificados:", 20, y);
+            y += 10;
+            userRisksIndexes.forEach(idx => {
+                const item = questions[idx];
+                doc.setFontSize(11); doc.setTextColor(0); doc.setFont("helvetica", "bold"); doc.text(item.title, 20, y); y += 4;
+                doc.setDrawColor(255, 140, 0); doc.setFillColor(255, 245, 230); doc.rect(20, y, 170, 15, 'F');
+                doc.setFontSize(9); doc.setTextColor(150, 80, 0); doc.text("Situación detectada:", 25, y + 6);
+                doc.setFont("helvetica", "normal"); doc.text(doc.splitTextToSize(item.problem, 150), 25, y + 10);
+                y += 18;
+                doc.setDrawColor(30, 126, 52); doc.setFillColor(240, 250, 240); doc.rect(20, y, 170, 15, 'F');
+                doc.setTextColor(30, 80, 30); doc.setFont("helvetica", "bold"); doc.text("Oportunidad:", 25, y + 6);
+                doc.setFont("helvetica", "normal"); doc.text(doc.splitTextToSize(item.opp, 150), 25, y + 10);
+                y += 22;
+                if(y > 250) { doc.addPage(); y = 20; }
+            });
+        } else {
+            doc.setFontSize(14); doc.setFont("helvetica", "bold"); doc.text("Análisis de Consistencia Operativa:", 20, y);
+            y += 10; doc.setFontSize(10); doc.setFont("helvetica", "normal");
+            const perfectText = "Felicitaciones. Tu empresa ha superado el 'techo operativo' inicial que detiene a la mayoría de las Pymes. Contás con una estructura ordenada, procesos claros y una baja dependencia de la intervención manual diaria. \n\nEsto te posiciona en una categoría exclusiva: la de las empresas listas para la innovación estratégica. Tu próximo paso no es 'arreglar' lo que no funciona, sino construir activos tecnológicos que generen nuevas ventajas competitivas y escalen tu facturación de forma exponencial.";
+            doc.text(doc.splitTextToSize(perfectText, 170), 20, y);
+            y += 45;
+            doc.setFont("helvetica", "bold"); doc.text("Áreas de exploración para el siguiente nivel:", 20, y); y += 8;
+            doc.setFont("helvetica", "normal");
+            const nextSteps = ["- Inteligencia de datos avanzada para predicción de mercado.", "- Automatización de la experiencia del cliente para escalar ventas sin sumar personal.", "- Integración total del ecosistema digital para una operación invisible."];
+            nextSteps.forEach(s => { doc.text(s, 25, y); y += 7; });
+        }
 
-        // Metodología Aura basada en la estrategia [cite: 522-528]
-        doc.setTextColor(0); doc.setFontSize(14); doc.setFont("helvetica", "bold");
-        doc.text("Cómo Aura puede ayudarte:", 20, y + 5); y += 15;
+        y += 15; doc.setTextColor(0); doc.setFontSize(14); doc.setFont("helvetica", "bold"); doc.text("La Metodología Aura:", 20, y); y += 10;
         doc.setFontSize(10); doc.setFont("helvetica", "normal");
-        const auraMethod = "En Aura somos tu partner tecnológico estratégico para superar el tope operativo. Nuestro método de trabajo se divide en tres etapas fundamentales para asegurar el impacto positivo:\n\n1. Diagnóstico del tope operativo: Analizamos cómo funciona hoy el negocio e identificamos los puntos donde la operación deja de escalar.\n2. Diseño de la solución: Definimos los procesos y una solución tecnológica alineada a la realidad comercial del negocio.\n3. Desarrollo e implementación: Construimos el software a medida y analizamos el uso real para asegurar que la herramienta ordene la operación y habilite el crecimiento.";
+        const auraMethod = "En Aura somos tu partner tecnológico estratégico. Nuestro método de trabajo asegura que cada solución sea un activo para el negocio:\n\n1. Diagnóstico: Analizamos cómo funciona hoy el negocio e identificamos los puntos donde se puede ganar más eficiencia o escala.\n2. Diseño: Definimos una solución tecnológica alineada a la realidad comercial de tu empresa.\n3. Implementación: Construimos el software que te permite recuperar el foco en lo que realmente importa.";
         doc.text(doc.splitTextToSize(auraMethod, 170), 20, y);
 
-        y += 50; doc.setFillColor(235, 242, 255); doc.rect(20, y, 170, 25, 'F');
+        y += 40; doc.setFillColor(235, 242, 255); doc.rect(20, y, 170, 25, 'F');
         doc.setFontSize(11); doc.setTextColor(0, 52, 235); doc.setFont("helvetica", "bold");
-        doc.text("Agendá tu asesoría técnica gratuita con Gonzalo:", 30, y + 10);
+        doc.text("Agendá una llamada para explorar tu próximo nivel:", 30, y + 10);
         doc.setFontSize(9); doc.text("https://cal.com/gonzalo-izquierdo-brown/30min", 30, y + 17);
-        doc.save(`Aura_Diagnostico_${company}.pdf`);
+        doc.save(`Aura_Visio_2026_${company}.pdf`);
     }
 </script>
 </body>
