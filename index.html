@@ -27,29 +27,21 @@
         
         .question, .lead-form, .results { display: none; }
         .active { display: block; animation: fadeIn 0.4s ease-out; }
-        
-        /* Títulos centrados */
         .step-title { text-align: center; font-weight: 700; font-size: 24px; margin-bottom: 10px; }
 
         .options { list-style: none; padding: 0; margin: 30px 0; }
         button.option-btn { width: 100%; padding: 22px; border: 1px solid #ddd; border-radius: var(--radius); background: white; cursor: pointer; transition: 0.3s; font-size: 16px; margin-bottom: 15px; color: var(--primary-text); font-family: 'Geist', sans-serif; font-weight: 500; text-align: center; }
         button.option-btn:hover { border-color: #0034EB; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,52,235,0.1); }
         
-        /* Botón Atrás */
         .back-btn { background: transparent; border: none; color: #666; cursor: pointer; font-size: 14px; text-decoration: underline; margin-top: 10px; display: block; width: 100%; text-align: center; }
-        .back-btn:hover { color: var(--primary-text); }
-
         input, select { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: var(--radius); font-size: 16px; background: #fff; font-family: 'Geist', sans-serif; box-sizing: border-box; }
         .submit-btn { width: 100%; padding: 18px; background: var(--primary-text); color: white; border: none; border-radius: var(--radius); cursor: pointer; font-weight: 600; font-size: 18px; transition: 0.3s; }
         
         .opp-counter { font-size: 18px; font-weight: 600; background: #EBF2FF; padding: 20px; border-radius: 15px; margin-bottom: 25px; text-align: center; border: 1px solid #0034EB; color: #0034EB; }
         .opp-number { font-size: 32px; display: block; font-weight: 800; }
-        
         .cta-btn { display: block; text-align: center; margin-top: 20px; padding: 18px; background: var(--gradient); color: white; text-decoration: none; border-radius: var(--radius); font-weight: bold; }
-        
         .footer-logo { text-align: center; margin-top: 35px; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.05); }
         .footer-logo img { max-width: 110px; height: auto; opacity: 0.8; }
-        
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -61,18 +53,16 @@
 
     <div class="quiz-container">
         <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
-
         <div id="quiz-steps">
             <div id="questions-container"></div>
-
             <div id="lead-form" class="lead-form">
                 <h2 class="step-title">Analizando resultados...</h2>
-                <p style="text-align:center; color:#666;">Completá tus datos para generar el Informe de Tope Operativo de Aura.</p>
-                <input type="text" id="userName" placeholder="Nombre y Apellido" required>
-                <input type="email" id="userEmail" placeholder="Email Corporativo" required>
-                <input type="text" id="userCompany" placeholder="Nombre de tu Empresa" required>
+                <p style="text-align:center; color:#666;">Completá tus datos para generar el Informe de Tope Operativo.</p>
+                <input type="text" id="userName" placeholder="Nombre completo" required>
+                <input type="email" id="userEmail" placeholder="Email corporativo" required>
+                <input type="text" id="userCompany" placeholder="Empresa" required>
                 <select id="userIndustry" required>
-                    <option value="">Tu Rubro</option>
+                    <option value="">Tu rubro</option>
                     <option value="Agro">Agro</option>
                     <option value="Juridico">Estudio Jurídico</option>
                     <option value="Logistica">Logística</option>
@@ -80,159 +70,87 @@
                     <option value="Servicios">Servicios / Pyme</option>
                     <option value="Retail">Retail / E-commerce</option>
                 </select>
-                <button class="submit-btn" onclick="processResults()">Ver Diagnóstico y Puntos de Mejora</button>
-                <button class="back-btn" onclick="prevStep('lead-form', 4)">Volver a la pregunta anterior</button>
+                <button class="submit-btn" onclick="processResults()">Ver Diagnóstico Estratégico</button>
+                <button class="back-btn" onclick="prevStep('lead-form', 4)">Volver</button>
             </div>
 
             <div id="results" class="results">
-                <h2 class="step-title">Análisis de Tope Operativo Finalizado</h2>
-                <div class="opp-counter">Identificamos <span id="opp-count" class="opp-number">0</span> puntos de fricción estratégica.</div>
-                <p style="text-align:center; color:#555; margin-bottom:20px;">Tu operativa actual presenta desafíos que Aura puede transformar en activos tecnológicos.</p>
+                <h2 class="step-title">Diagnóstico Finalizado</h2>
+                <div class="opp-counter">Identificamos <span id="opp-count" class="opp-number">0</span> oportunidades de mejora en tu operativa actual.</div>
                 <button class="submit-btn" style="background:#444;" onclick="generatePDF()">📥 Descargar Informe Completo (PDF)</button>
-                <a href="https://cal.com/gonzalo-izquierdo-brown/30min" target="_blank" class="cta-btn">Agendar Llamada de Asesoría Técnica</a>
+                <a href="https://cal.com/gonzalo-izquierdo-brown/30min" target="_blank" class="cta-btn">Agendar llamada de asesoría</a>
             </div>
         </div>
-
-        <div class="footer-logo">
-            <img src="image_1.png" alt="Aura Logo">
-        </div>
+        <div class="footer-logo"><img src="image_1.png" alt="Logo"></div>
     </div>
 </div>
 
 <script>
     const questions = [
-        { 
-            q: "¿Sentís que la operación diaria depende 100% de tu supervisión constante o de la memoria de tu equipo?", 
-            ansYes: "Sí, la operación depende de mi memoria", 
-            ansNo: "No, tengo procesos documentados y claros",
-            problem: "Dependencia humana crítica. El conocimiento del negocio no está institucionalizado[cite: 504].",
-            opp: "Transformar el capital intelectual en procesos digitales para recuperar libertad estratégica[cite: 9, 532]." 
-        },
-        { 
-            q: "¿Tu equipo pierde tiempo valioso en tareas manuales, doble carga de datos o buscando info dispersa?", 
-            ansYes: "Mi equipo pierde horas cargando datos", 
-            ansNo: "Usamos automatizaciones eficientes",
-            problem: "Fricción operativa. Estás financiando ineficiencias con sueldos calificados[cite: 502, 515].",
-            opp: "Automatizar flujos de trabajo para liberar tiempo hacia el core del negocio[cite: 8, 514]." 
-        },
-        { 
-            q: "¿La información crítica de tu empresa vive en planillas fragmentadas que ya no pueden sostener tu crecimiento?", 
-            ansYes: "Vivimos saltando entre planillas", 
-            ansNo: "Tenemos una sola fuente de verdad",
-            problem: "Tope de procesos. La fragmentación genera silos y aumenta el error[cite: 14, 24, 503].",
-            opp: "Unificar la operación en un sistema a medida para escalar con consistencia[cite: 501, 516]." 
-        },
-        { 
-            q: "¿Te cuesta obtener datos de rentabilidad o stock en tiempo real sin procesos manuales intermedios?", 
-            ansYes: "Es imposible ver números en tiempo real", 
-            ansNo: "Tomo decisiones con tableros claros",
-            problem: "Falta de trazabilidad. Gestionar con datos desactualizados impide reacciones rápidas[cite: 505, 519].",
-            opp: "Implementar Dashboards de control integral para liderar con datos proactivos[cite: 518]." 
-        },
-        { 
-            q: "¿Sienten que viven 'apagando incendios' operativos en lugar de enfocarse en expandir el negocio?", 
-            ansYes: "Vivo apagando incendios operativos", 
-            ansNo: "Estoy enfocado en escalar el negocio",
-            problem: "Tope operativo alcanzado. La estructura actual consume toda tu energía operativa[cite: 14, 25, 501].",
-            opp: "Construir infraestructura tecnológica que absorba la carga y habilite el crecimiento[cite: 506]." 
-        }
+        { q: "¿La operación diaria depende totalmente de tu supervisión o de la memoria del equipo?", ansYes: "Sí, depende de nuestra presencia física o memoria", ansNo: "No, los procesos fluyen solos", problem: "Dependencia humana crítica. La falta de procesos automáticos impide delegar con tranquilidad y frena el crecimiento.", opp: "Lograr que la empresa funcione sin depender de personas específicas, permitiéndote recuperar tiempo para dirigir." },
+        { q: "¿Sienten que pierden tiempo valioso en tareas repetitivas o cargando datos a mano?", ansYes: "Sí, perdemos tiempo en tareas administrativas", ansNo: "Nuestros procesos están automatizados", problem: "Fricción operativa. Se gasta energía en tareas de carga que no agregan valor real al negocio.", opp: "Liberar el tiempo del equipo para que se enfoque en vender más o mejorar el servicio al cliente." },
+        { q: "¿La información crítica vive en distintos archivos o herramientas que no se conectan?", ansYes: "Sí, la información está dispersa", ansNo: "Tenemos todo centralizado y conectado", problem: "Desorden de información. Tener datos fragmentados aumenta el riesgo de errores y duplica el trabajo diario.", opp: "Unificar la operación para tener una visión clara de todo el negocio en un solo lugar y sin errores." },
+        { q: "¿Es difícil obtener datos de stock o rentabilidad en tiempo real sin procesos manuales?", ansYes: "Sí, es difícil ver los números hoy mismo", ansNo: "Vemos el estado del negocio al instante", problem: "Falta de control. Gestionar sin datos al día hace que sea imposible reaccionar rápido a los cambios del mercado.", opp: "Contar con tableros automáticos que muestren la salud real del negocio para tomar mejores decisiones." },
+        { q: "¿Viven 'apagando incendios' operativos en lugar de planificar el crecimiento?", ansYes: "Sí, vivimos resolviendo urgencias diarias", ansNo: "Estamos enfocados en escalar el negocio", problem: "Tope operativo. La estructura actual ya no soporta más carga, impidiendo que el negocio siga expandiéndose.", opp: "Construir una base tecnológica sólida que absorba el trabajo pesado y habilite el crecimiento sin caos." }
     ];
 
     let currentStep = 0; let score = 0; let userRisksIndexes = [];
-
     const qCont = document.getElementById('questions-container');
     questions.forEach((item, i) => {
         const div = document.createElement('div');
         div.className = `question ${i === 0 ? 'active' : ''}`;
         div.id = `q-${i}`;
-        div.innerHTML = `
-            <h2 class="step-title">Análisis Operativo ${i+1}</h2>
-            <p style="text-align:center; font-size:18px; line-height:1.4;">${item.q}</p>
-            <ul class="options">
-                <li><button class="option-btn" onclick="answer(${i}, true)">${item.ansYes}</button></li>
-                <li><button class="option-btn" onclick="answer(${i}, false)">${item.ansNo}</button></li>
-            </ul>
-            ${i > 0 ? `<button class="back-btn" onclick="prevStep('q-${i}', ${i-1})">Volver a la pregunta anterior</button>` : ''}
-        `;
+        div.innerHTML = `<h2 class="step-title">Análisis Operativo ${i+1}</h2><p style="text-align:center; font-size:18px;">${item.q}</p><ul class="options"><li><button class="option-btn" onclick="answer(${i}, true)">${item.ansYes}</button></li><li><button class="option-btn" onclick="answer(${i}, false)">${item.ansNo}</button></li></ul>${i > 0 ? `<button class="back-btn" onclick="prevStep('q-${i}', ${i-1})">Volver</button>` : ''}`;
         qCont.appendChild(div);
     });
 
-    function updateProgressBar(step) {
-        const percent = ((step) / (questions.length + 1)) * 100;
-        document.getElementById('progressBar').style.width = percent + "%";
-    }
-
-    function answer(index, isRisk) {
-        if(isRisk) { 
-            score++; 
-            userRisksIndexes.push(index); 
-        }
-        document.getElementById(`q-${index}`).classList.remove('active');
-        currentStep = index + 1;
-        updateProgressBar(currentStep);
-        if(currentStep < questions.length) { 
-            document.getElementById(`q-${currentStep}`).classList.add('active'); 
-        } else { 
-            document.getElementById('lead-form').classList.add('active'); 
-        }
-    }
-
-    function prevStep(currentId, targetIndex) {
-        document.getElementById(currentId).classList.remove('active');
-        const targetId = `q-${targetIndex}`;
-        document.getElementById(targetId).classList.add('active');
-        
-        // Si la pregunta anterior fue un riesgo, bajamos el score
-        if (userRisksIndexes.includes(targetIndex)) {
-            score--;
-            userRisksIndexes = userRisksIndexes.filter(i => i !== targetIndex);
-        }
-        
-        currentStep = targetIndex;
-        updateProgressBar(currentStep);
-    }
-
-    function processResults() {
-        if(!document.getElementById('userName').value || !document.getElementById('userEmail').value) return alert("Por favor, completá los datos.");
-        document.getElementById('lead-form').classList.remove('active');
-        document.getElementById('results').classList.add('active');
-        document.getElementById('opp-count').innerText = score;
-        updateProgressBar(questions.length + 1);
-    }
+    function updateProgressBar(step) { document.getElementById('progressBar').style.width = ((step) / (questions.length + 1)) * 100 + "%"; }
+    function answer(index, isRisk) { if(isRisk) { score++; userRisksIndexes.push(index); } document.getElementById(`q-${index}`).classList.remove('active'); currentStep = index + 1; updateProgressBar(currentStep); if(currentStep < questions.length) { document.getElementById(`q-${currentStep}`).classList.add('active'); } else { document.getElementById('lead-form').classList.add('active'); } }
+    function prevStep(currentId, targetIndex) { document.getElementById(currentId).classList.remove('active'); document.getElementById(`q-${targetIndex}`).classList.add('active'); if (userRisksIndexes.includes(targetIndex)) { score--; userRisksIndexes = userRisksIndexes.filter(i => i !== targetIndex); } currentStep = targetIndex; updateProgressBar(currentStep); }
+    function processResults() { if(!document.getElementById('userName').value) return alert("Por favor completá tus datos."); document.getElementById('lead-form').classList.remove('active'); document.getElementById('results').classList.add('active'); document.getElementById('opp-count').innerText = score; updateProgressBar(questions.length + 1); }
 
     function generatePDF() {
         const { jsPDF } = window.jspdf; const doc = new jsPDF();
         const company = document.getElementById('userCompany').value;
+        const name = document.getElementById('userName').value;
         const industry = document.getElementById('userIndustry').value;
 
-        doc.setFont("helvetica", "bold"); doc.setFontSize(22); doc.text("Informe de Tope Operativo Aura", 20, 25);
-        doc.setFontSize(10); doc.setFont("helvetica", "normal"); doc.text(`Aura Partner Tecnológico | Empresa: ${company} | Rubro: ${industry}`, 20, 33);
+        doc.setFont("helvetica", "bold"); doc.setFontSize(22); doc.text("Informe de Tope Operativo 2026", 20, 25);
+        doc.setFontSize(10); doc.setFont("helvetica", "normal"); doc.text(`Preparado para: ${name} | Empresa: ${company} | Rubro: ${industry}`, 20, 33);
         doc.setDrawColor(0, 52, 235); doc.line(20, 38, 190, 38);
 
         let y = 55;
-        doc.setFontSize(14); doc.setFont("helvetica", "bold"); doc.text("1. Diagnóstico de Riesgos:", 20, y);
-        y += 10; doc.setFontSize(10); doc.setFont("helvetica", "normal");
+        doc.setFontSize(14); doc.setFont("helvetica", "bold"); doc.text("Diagnóstico de Puntos de Mejora:", 20, y);
+        y += 10;
 
         userRisksIndexes.forEach(idx => {
             const item = questions[idx];
-            doc.setFont("helvetica", "bold"); doc.text(`[!] Desafío:`, 25, y);
-            y += 5; doc.setFont("helvetica", "normal");
-            const pLines = doc.splitTextToSize(item.problem, 160); doc.text(pLines, 30, y);
-            y += (pLines.length * 5) + 3;
-            doc.setFont("helvetica", "bold"); doc.setTextColor(30, 126, 52); doc.text(`- Oportunidad Aura:`, 25, y);
-            y += 5; doc.setFont("helvetica", "normal"); doc.setTextColor(0);
-            const oLines = doc.splitTextToSize(item.opp, 160); doc.text(oLines, 30, y);
-            y += (oLines.length * 5) + 7;
+            // Recuadro Naranja (Problema)
+            doc.setDrawColor(255, 140, 0); doc.setFillColor(255, 245, 230); doc.rect(20, y, 170, 15, 'F');
+            doc.setFontSize(9); doc.setTextColor(150, 80, 0); doc.setFont("helvetica", "bold");
+            doc.text("Área a mejorar:", 25, y + 6);
+            doc.setFont("helvetica", "normal"); doc.text(doc.splitTextToSize(item.problem, 150), 25, y + 10);
+            y += 18;
+            // Recuadro Verde (Oportunidad)
+            doc.setDrawColor(30, 126, 52); doc.setFillColor(240, 250, 240); doc.rect(20, y, 170, 15, 'F');
+            doc.setTextColor(30, 80, 30); doc.setFont("helvetica", "bold");
+            doc.text("Oportunidad:", 25, y + 6);
+            doc.setFont("helvetica", "normal"); doc.text(doc.splitTextToSize(item.opp, 150), 25, y + 10);
+            y += 22;
+            if(y > 250) { doc.addPage(); y = 20; }
         });
 
-        y += 10; doc.setFontSize(14); doc.setFont("helvetica", "bold"); doc.text("2. Metodología Aura:", 20, y);
-        y += 10; doc.setFontSize(10); doc.setFont("helvetica", "normal");
-        const auraMethod = "Analizamos tu tope operativo y construimos el software a medida que te devuelve el orden y el foco[cite: 8, 9, 352].";
-        doc.text(doc.splitTextToSize(auraMethod, 170), 25, y);
+        // Metodología Aura
+        doc.setTextColor(0); doc.setFontSize(14); doc.setFont("helvetica", "bold");
+        doc.text("Cómo Aura puede ayudarte:", 20, y + 5); y += 15;
+        doc.setFontSize(10); doc.setFont("helvetica", "normal");
+        const auraMethod = "En Aura somos tu partner tecnológico estratégico[cite: 33]. Nuestro método se enfoca en destrabar tu crecimiento en tres pasos: \n\n1. Diagnóstico del tope operativo para entender dónde se frena el negocio[cite: 522].\n2. Diseño de una solución técnica alineada a tu lógica comercial real[cite: 526].\n3. Desarrollo de software a medida para devolverte el orden y el foco[cite: 528].";
+        doc.text(doc.splitTextToSize(auraMethod, 170), 20, y);
 
-        y += 30; doc.setFillColor(235, 242, 255); doc.rect(20, y, 170, 30, 'F');
-        y += 10; doc.setFontSize(12); doc.setTextColor(0, 52, 235); doc.text("Agendá tu Llamada con Gonzalo Izquierdo Brown:", 30, y);
-        y += 10; doc.text("https://cal.com/gonzalo-izquierdo-brown/30min", 30, y);
+        y += 40; doc.setFillColor(235, 242, 255); doc.rect(20, y, 170, 25, 'F');
+        doc.setFontSize(11); doc.setTextColor(0, 52, 235); doc.setFont("helvetica", "bold");
+        doc.text("Agendá tu asesoría técnica gratuita con Gonzalo:", 30, y + 10);
+        doc.setFontSize(9); doc.text("https://cal.com/gonzalo-izquierdo-brown/30min", 30, y + 17);
         doc.save(`Aura_Diagnostico_${company}.pdf`);
     }
 </script>
