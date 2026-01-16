@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aura | Diagnóstico de Tope Operativo</title>
+    <title>Aura | Diagnóstico de Escalamiento 2026</title>
     <link href="https://api.fontshare.com/v2/css?f[]=geist@1,2&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    
     <style>
         :root { 
             --primary-text: #1A1A1C;
@@ -15,37 +14,117 @@
             --gradient: linear-gradient(135deg, #0034EB, #00F3F9, #0A34CD, #425680, #81FFD9);
         }
 
-        body { font-family: 'Geist', sans-serif; background-color: var(--bg-body); color: var(--primary-text); margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
-        .landing-wrapper { width: 100%; min-height: 100vh; background: var(--gradient); background-size: 400% 400%; animation: gradientBG 15s ease infinite; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; box-sizing: border-box; }
-        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        body { 
+            font-family: 'Geist', sans-serif; 
+            background-color: var(--bg-body); 
+            color: var(--primary-text); 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            min-height: 100vh; 
+        }
 
-        .main-title { color: #FFFFFF; text-align: center; max-width: 800px; margin-bottom: 30px; font-size: 34px; font-weight: 800; line-height: 1.2; text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.7); }
+        .landing-wrapper { 
+            width: 100%; 
+            min-height: 100vh; 
+            background: var(--gradient); 
+            background-size: 400% 400%; 
+            animation: gradientBG 15s ease infinite; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 40px 20px; 
+            box-sizing: border-box; 
+        }
 
-        .quiz-container { max-width: 600px; width: 100%; background: rgba(255, 255, 255, 0.95); padding: 40px; border-radius: var(--radius); box-shadow: 0 20px 40px rgba(0,0,0,0.2); backdrop-filter: blur(10px); box-sizing: border-box; }
+        @keyframes gradientBG { 
+            0% { background-position: 0% 50%; } 
+            50% { background-position: 100% 50%; } 
+            100% { background-position: 0% 50%; } 
+        }
+
+        /* Título Principal Estilo Aura */
+        .main-title { 
+            color: #FFFFFF; 
+            text-align: center; 
+            max-width: 850px; 
+            margin-bottom: 15px; 
+            font-size: 38px; 
+            font-weight: 800; 
+            line-height: 1.1; 
+            text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.7); 
+        }
+
+        /* Sub-headline solicitado: Blanco, sombreado y menor tamaño */
+        .sub-headline { 
+            color: #FFFFFF; 
+            text-align: center; 
+            max-width: 700px; 
+            margin-bottom: 35px; 
+            font-size: 20px; 
+            font-weight: 400; 
+            line-height: 1.4;
+            text-shadow: 1px 3px 8px rgba(0, 0, 0, 0.6); 
+            opacity: 0.95;
+        }
+
+        .quiz-container { 
+            max-width: 650px; 
+            width: 100%; 
+            background: rgba(255, 255, 255, 0.96); 
+            padding: 45px; 
+            border-radius: var(--radius); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2); 
+            backdrop-filter: blur(10px); 
+            box-sizing: border-box; 
+        }
+
         .progress-container { width: 100%; background: #eee; height: 6px; border-radius: 10px; margin-bottom: 30px; }
         .progress-bar { height: 100%; background: var(--gradient); width: 0%; border-radius: 10px; transition: 0.5s; }
         
-        h2 { font-weight: 700; text-align: center; margin-top: 0; font-size: 24px; }
         .question, .lead-form, .results { display: none; }
         .active { display: block; animation: fadeIn 0.4s ease-out; }
-        .options { list-style: none; padding: 0; margin: 25px 0; }
-        button.option-btn { width: 100%; padding: 20px; border: 1px solid #ddd; border-radius: var(--radius); background: white; cursor: pointer; transition: 0.3s; font-size: 16px; margin-bottom: 12px; color: var(--primary-text); font-family: 'Geist', sans-serif; font-weight: 500; }
+        
+        .options { list-style: none; padding: 0; margin: 30px 0; }
+        button.option-btn { 
+            width: 100%; 
+            padding: 22px; 
+            border: 1px solid #ddd; 
+            border-radius: var(--radius); 
+            background: white; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            font-size: 16px; 
+            margin-bottom: 15px; 
+            color: var(--primary-text); 
+            font-family: 'Geist', sans-serif; 
+            font-weight: 500; 
+            text-align: center; 
+        }
+        
         button.option-btn:hover { border-color: #0034EB; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,52,235,0.1); }
-        input, select { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: var(--radius); font-size: 16px; box-sizing: border-box; background: #fff; font-family: 'Geist', sans-serif; }
+        
+        input, select { width: 100%; padding: 15px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: var(--radius); font-size: 16px; background: #fff; font-family: 'Geist', sans-serif; box-sizing: border-box; }
         .submit-btn { width: 100%; padding: 18px; background: var(--primary-text); color: white; border: none; border-radius: var(--radius); cursor: pointer; font-weight: 600; font-size: 18px; transition: 0.3s; }
-        .result-box { padding: 25px; border-radius: var(--radius); margin: 20px 0; text-align: center; background: #EBF2FF; border: 1px solid #0034EB; color: #0034EB; }
-        .opp-counter { font-size: 18px; font-weight: 600; background: #f0f0f0; padding: 15px; border-radius: 15px; margin-bottom: 20px; text-align: center; }
-        .opp-number { color: #0034EB; font-size: 28px; display: block; font-weight: 800; }
+        
+        .opp-counter { font-size: 18px; font-weight: 600; background: #EBF2FF; padding: 20px; border-radius: 15px; margin-bottom: 25px; text-align: center; border: 1px solid #0034EB; color: #0034EB; }
+        .opp-number { font-size: 32px; display: block; font-weight: 800; }
+        
         .cta-btn { display: block; text-align: center; margin-top: 20px; padding: 18px; background: var(--gradient); color: white; text-decoration: none; border-radius: var(--radius); font-weight: bold; }
-        .footer-logo { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.05); }
-        .footer-logo img { max-width: 100px; height: auto; opacity: 0.7; }
+        
+        .footer-logo { text-align: center; margin-top: 35px; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.05); }
+        .footer-logo img { max-width: 110px; height: auto; opacity: 0.8; }
+        
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <div class="landing-wrapper">
-    <h1 class="main-title">¿Tu empresa escalará este año o ya llegó a su Tope Operativo?</h1>
+    <h1 class="main-title">¿Tu operación podrá sostener el crecimiento de tu empresa en 2026 o ya alcanzó su tope?</h1>
+    <p class="sub-headline">Obtené un Informe de Escalamiento Estratégico gratuito y descubrí los puntos de fuga donde tu negocio está perdiendo tiempo y control.</p>
 
     <div class="quiz-container">
         <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
@@ -54,9 +133,9 @@
             <div id="questions-container"></div>
 
             <div id="lead-form" class="lead-form">
-                <h2>Casi terminamos...</h2>
-                <p style="text-align:center; color:#666;">Ingresá tus datos para generar el Informe de Tope Operativo cualitativo.</p>
-                <input type="text" id="userName" placeholder="Tu Nombre y Apellido" required>
+                <h2>Analizando resultados...</h2>
+                <p style="text-align:center; color:#666;">Completá tus datos para generar el Informe de Tope Operativo cualitativo de Aura.</p>
+                <input type="text" id="userName" placeholder="Nombre y Apellido" required>
                 <input type="email" id="userEmail" placeholder="Email Corporativo" required>
                 <input type="text" id="userCompany" placeholder="Nombre de tu Empresa" required>
                 <select id="userIndustry" required>
@@ -65,17 +144,17 @@
                     <option value="Juridico">Estudio Jurídico</option>
                     <option value="Logistica">Logística</option>
                     <option value="Salud">Salud</option>
-                    <option value="Retail">Retail / E-commerce</option>
                     <option value="Servicios">Servicios / Pyme</option>
+                    <option value="Retail">Retail / E-commerce</option>
                 </select>
                 <button class="submit-btn" onclick="processResults()">Ver Diagnóstico y Puntos de Mejora</button>
             </div>
 
             <div id="results" class="results">
-                <h2>Análisis de Tope Operativo</h2>
-                <div id="res-box" class="result-box"><strong>DIAGNÓSTICO: TOPE DETECTADO</strong></div>
-                <div class="opp-counter">Se identificaron <span id="opp-count" class="opp-number">0</span> cuellos de botella que Aura puede destrabar.</div>
-                <button class="submit-btn" style="background:#555;" onclick="generatePDF()">📥 Descargar Informe Estratégico (PDF)</button>
+                <h2>Análisis de Tope Operativo Finalizado</h2>
+                <div class="opp-counter">Identificamos <span id="opp-count" class="opp-number">0</span> puntos de fricción estratégica.</div>
+                <p style="text-align:center; color:#555; margin-bottom:20px;">Tu operativa actual presenta desafíos de escalabilidad que Aura puede transformar en activos tecnológicos.</p>
+                <button class="submit-btn" style="background:#444;" onclick="generatePDF()">📥 Descargar Informe Completo (PDF)</button>
                 <a href="https://cal.com/gonzalo-izquierdo-brown/30min" target="_blank" class="cta-btn">Agendar Llamada de Asesoría Técnica</a>
             </div>
         </div>
@@ -87,26 +166,48 @@
 </div>
 
 <script>
+    // Preguntas profundas basadas en la base de conocimiento de Aura [cite: 8, 14, 25, 522]
     const questions = [
-        { q: "¿Sentís que la operación diaria depende 100% de tu supervisión constante?", risk: "Alta dependencia del fundador (Cuello de botella)." },
-        { q: "¿Tu equipo pierde tiempo valioso en carga manual de datos o reportes repetitivos?", risk: "Ineficiencia operativa por procesos manuales." },
-        { q: "¿La información crítica del negocio está distribuida en múltiples Excels o herramientas inconexas?", risk: "Información fragmentada (Tope Operativo)." },
-        { q: "¿Te cuesta saber el estado real de tu rentabilidad o stock en tiempo real?", risk: "Falta de trazabilidad y dashboards estratégicos." },
-        { q: "¿Viven 'apagando incendios' en lugar de ejecutar la estrategia de crecimiento?", risk: "Falta de automatización y orden operativo." }
+        { 
+            q: "¿Sentís que la operación diaria depende 100% de tu supervisión constante o de la memoria de tu equipo?", 
+            problem: "Dependencia humana crítica. El conocimiento del negocio no está institucionalizado, lo que impide delegar y escalar.",
+            opp: "Transformar el capital intelectual en procesos digitales para recuperar tu libertad estratégica." 
+        },
+        { 
+            q: "¿Tu equipo pierde tiempo valioso en tareas manuales, doble carga de datos o buscando info dispersa?", 
+            problem: "Fricción operativa. Estás financiando ineficiencias que un software a medida resuelve de forma instantánea.",
+            opp: "Automatizar flujos de trabajo para liberar el tiempo de tu equipo hacia el core del negocio." 
+        },
+        { 
+            q: "¿La información crítica de tu empresa vive en planillas fragmentadas que ya no pueden sostener tu crecimiento?", 
+            problem: "Tope de procesos. La fragmentación genera silos de información y aumenta exponencialmente el margen de error.",
+            opp: "Unificar la operación en una Fuente Única de Verdad para escalar con consistencia." 
+        },
+        { 
+            q: "¿Te cuesta obtener datos de rentabilidad o stock en tiempo real sin procesos manuales intermedios?", 
+            problem: "Falta de trazabilidad. Gestionar con datos desactualizados te impide tomar decisiones estratégicas rápidas.",
+            opp: "Implementar Dashboards de control integral para liderar con datos precisos y proactivos." 
+        },
+        { 
+            q: "¿Sienten que viven 'apagando incendios' operativos en lugar de enfocarse en expandir el negocio?", 
+            problem: "Tope operativo alcanzado. Tu estructura actual consume toda tu energía operativa, bloqueando tu visión de futuro.",
+            opp: "Construir una infraestructura tecnológica que absorba la carga operativa y habilite el crecimiento." 
+        }
     ];
 
     let currentStep = 0; let score = 0; let userRisks = [];
+
     const qCont = document.getElementById('questions-container');
     questions.forEach((item, i) => {
         const div = document.createElement('div');
         div.className = `question ${i === 0 ? 'active' : ''}`;
         div.id = `q-${i}`;
-        div.innerHTML = `<h2>Pregunta ${i+1}</h2><p style="text-align:center; font-size:18px;">${item.q}</p><ul class="options"><li><button class="option-btn" onclick="answer(${i}, true)">Sí, sucede</button></li><li><button class="option-btn" onclick="answer(${i}, false)">No / Está controlado</button></li></ul>`;
+        div.innerHTML = `<h2>Análisis Operativo ${i+1}</h2><p style="text-align:center; font-size:18px; line-height:1.4;">${item.q}</p><ul class="options"><li><button class="option-btn" onclick="answer(${i}, true)">Sí, es un desafío actual</button></li><li><button class="option-btn" onclick="answer(${i}, false)">No / Está controlado</button></li></ul>`;
         qCont.appendChild(div);
     });
 
     function answer(index, isRisk) {
-        if(isRisk) { score++; userRisks.push(questions[index].risk); }
+        if(isRisk) { score++; userRisks.push(questions[index]); }
         document.getElementById(`q-${index}`).classList.remove('active');
         currentStep++; 
         const percent = ((currentStep) / (questions.length + 1)) * 100;
@@ -116,7 +217,7 @@
     }
 
     function processResults() {
-        if(!document.getElementById('userName').value || !document.getElementById('userIndustry').value) return alert("Por favor, completá los datos.");
+        if(!document.getElementById('userName').value || !document.getElementById('userEmail').value) return alert("Por favor, completá los datos para el diagnóstico.");
         document.getElementById('lead-form').classList.remove('active');
         document.getElementById('results').classList.add('active');
         document.getElementById('opp-count').innerText = score;
@@ -128,35 +229,44 @@
         const name = document.getElementById('userName').value;
         const industry = document.getElementById('userIndustry').value;
 
-        doc.setFont("helvetica", "bold"); doc.setFontSize(22);
-        doc.text("Informe de Diagnóstico de Tope Operativo", 20, 25);
-        doc.setFontSize(11); doc.setFont("helvetica", "normal"); doc.setTextColor(100);
-        doc.text(`Aura Partner Tecnológico | Empresa: ${company} | Rubro: ${industry}`, 20, 35);
-        doc.setDrawColor(0, 52, 235); doc.line(20, 40, 190, 40);
+        // Estilo PDF Premium de Aura [cite: 34, 506]
+        doc.setFont("helvetica", "bold"); doc.setFontSize(22); doc.setTextColor(26, 26, 28);
+        doc.text("Informe de Tope Operativo y Escalamiento", 20, 25);
+        doc.setFontSize(10); doc.setFont("helvetica", "normal"); doc.setTextColor(100);
+        doc.text(`Aura Partner Tecnológico | Preparado para: ${name} | Empresa: ${company}`, 20, 33);
+        doc.setDrawColor(0, 52, 235); doc.line(20, 38, 190, 38);
 
-        doc.setTextColor(0); doc.setFontSize(14); doc.setFont("helvetica", "bold");
-        doc.text("1. Análisis del Techo de Procesos:", 20, 55);
-        doc.setFont("helvetica", "normal"); doc.setFontSize(10);
-        let y = 65;
-        userRisks.forEach(risk => { doc.text(`[!] ${risk}`, 25, y); y += 8; });
+        let y = 55;
+        doc.setFontSize(14); doc.setFont("helvetica", "bold"); doc.setTextColor(0);
+        doc.text("1. Diagnóstico de Riesgos Operativos Detectados:", 20, y);
+        y += 10; doc.setFontSize(10); doc.setFont("helvetica", "normal");
+
+        if(userRisks.length > 0) {
+            userRisks.forEach(item => {
+                doc.setFont("helvetica", "bold"); doc.text(`[!] Desafío:`, 25, y);
+                y += 5; doc.setFont("helvetica", "normal");
+                const pLines = doc.splitTextToSize(item.problem, 160); doc.text(pLines, 30, y);
+                y += (pLines.length * 5) + 3;
+                doc.setFont("helvetica", "bold"); doc.setTextColor(30, 126, 52); doc.text(`- Oportunidad Estratégica Aura:`, 25, y);
+                y += 5; doc.setFont("helvetica", "normal"); doc.setTextColor(0);
+                const oLines = doc.splitTextToSize(item.opp, 160); doc.text(oLines, 30, y);
+                y += (oLines.length * 5) + 7;
+                if(y > 270) { doc.addPage(); y = 20; }
+            });
+        }
 
         y += 10; doc.setFontSize(14); doc.setFont("helvetica", "bold");
-        doc.text("2. Propuesta de Escalamiento de Aura:", 20, y);
+        doc.text("2. Metodología Aura para Destrabar tu Crecimiento:", 20, y);
         y += 10; doc.setFontSize(10); doc.setFont("helvetica", "normal");
-        let solutions = ["- CRM a medida adaptado a tu lógica comercial.", "- Automatización de flujos entre áreas para eliminar tareas manuales.", "- Dashboard de Trazabilidad para decisiones basadas en datos reales."];
-        solutions.forEach(s => { doc.text(s, 25, y); y += 7; });
+        const auraMethod = "No somos una software factory genérica; somos tu partner estratégico. Analizamos tu tope operativo y construimos el software a medida que libera tu tiempo y ordena tu información crítica para escalar sin perder el foco.";
+        const mLines = doc.splitTextToSize(auraMethod, 170); doc.text(mLines, 25, y);
 
-        y += 15; doc.setFontSize(14); doc.setFont("helvetica", "bold");
-        doc.text(`3. Recomendación Estratégica para ${industry}:`, 20, y);
-        y += 10; doc.setFontSize(10); doc.setFont("helvetica", "normal");
-        let advice = "Aura construye tecnología que se adapta a tu negocio, no al revés. Nuestro objetivo es que recuperes tu tiempo para que puedas enfocarte en el crecimiento real y no en apagar incendios diarios.";
-        doc.text(doc.splitTextToSize(advice, 160), 25, y);
-
-        y += 30; doc.setDrawColor(0, 52, 235); doc.setFillColor(235, 242, 255); doc.rect(20, y, 170, 30, 'F');
+        y += 25; doc.setDrawColor(0, 52, 235); doc.setFillColor(235, 242, 255); doc.rect(20, y, 170, 35, 'F');
         y += 10; doc.setFont("helvetica", "bold"); doc.setFontSize(12); doc.setTextColor(0, 52, 235);
-        doc.text("Agendá una llamada técnica con Gonzalo Izquierdo Brown:", 30, y);
-        y += 10; doc.text("https://cal.com/gonzalo-izquierdo-brown/30min", 30, y);
-        
+        doc.text("¿Listo para profundizar en estos puntos?", 30, y);
+        y += 10; doc.setFontSize(10); doc.setTextColor(0); doc.text("Agendá una Llamada Técnica de 30 Minutos con Gonzalo Izquierdo Brown:", 30, y);
+        y += 7; doc.setTextColor(0, 52, 235); doc.text("https://cal.com/gonzalo-izquierdo-brown/30min", 30, y);
+
         doc.save(`Aura_Diagnostico_${company}.pdf`);
     }
 </script>
