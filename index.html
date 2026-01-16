@@ -81,17 +81,52 @@
                 <a href="https://cal.com/gonzalo-izquierdo-brown/30min" target="_blank" class="cta-btn">Agendar llamada de asesoría</a>
             </div>
         </div>
-        <div class="footer-logo"><img src="image_1.png" alt="Logo"></div>
+        <div class="footer-logo"><img src="image_1.png" alt="Aura Logo"></div>
     </div>
 </div>
 
 <script>
     const questions = [
-        { q: "¿La operación diaria depende totalmente de tu supervisión o de la memoria del equipo?", ansYes: "Sí, depende de nuestra presencia física o memoria", ansNo: "No, los procesos fluyen solos", problem: "Dependencia humana crítica. La falta de procesos automáticos impide delegar con tranquilidad y frena el crecimiento.", opp: "Lograr que la empresa funcione sin depender de personas específicas, permitiéndote recuperar tiempo para dirigir." },
-        { q: "¿Sienten que pierden tiempo valioso en tareas repetitivas o cargando datos a mano?", ansYes: "Sí, perdemos tiempo en tareas administrativas", ansNo: "Nuestros procesos están automatizados", problem: "Fricción operativa. Se gasta energía en tareas de carga que no agregan valor real al negocio.", opp: "Liberar el tiempo del equipo para que se enfoque en vender más o mejorar el servicio al cliente." },
-        { q: "¿La información crítica vive en distintos archivos o herramientas que no se conectan?", ansYes: "Sí, la información está dispersa", ansNo: "Tenemos todo centralizado y conectado", problem: "Desorden de información. Tener datos fragmentados aumenta el riesgo de errores y duplica el trabajo diario.", opp: "Unificar la operación para tener una visión clara de todo el negocio en un solo lugar y sin errores." },
-        { q: "¿Es difícil obtener datos de stock o rentabilidad en tiempo real sin procesos manuales?", ansYes: "Sí, es difícil ver los números hoy mismo", ansNo: "Vemos el estado del negocio al instante", problem: "Falta de control. Gestionar sin datos al día hace que sea imposible reaccionar rápido a los cambios del mercado.", opp: "Contar con tableros automáticos que muestren la salud real del negocio para tomar mejores decisiones." },
-        { q: "¿Viven 'apagando incendios' operativos en lugar de planificar el crecimiento?", ansYes: "Sí, vivimos resolviendo urgencias diarias", ansNo: "Estamos enfocados en escalar el negocio", problem: "Tope operativo. La estructura actual ya no soporta más carga, impidiendo que el negocio siga expandiéndose.", opp: "Construir una base tecnológica sólida que absorba el trabajo pesado y habilite el crecimiento sin caos." }
+        { 
+            title: "Dependencia humana crítica",
+            q: "¿La operación diaria depende totalmente de tu supervisión o de la memoria del equipo?", 
+            ansYes: "Sí, depende de nuestra presencia física o memoria", 
+            ansNo: "No, los procesos fluyen solos", 
+            problem: "La empresa depende críticamente de personas específicas. La falta de procesos automáticos impide delegar con seguridad y frena el crecimiento sostenible.", 
+            opp: "Institucionalizar el conocimiento en procesos digitales para que el negocio funcione sin tu presencia constante, recuperando tiempo directivo." 
+        },
+        { 
+            title: "Fricción operativa",
+            q: "¿Sienten que pierden tiempo valioso en tareas repetitivas o cargando datos a mano?", 
+            ansYes: "Sí, perdemos tiempo en tareas administrativas", 
+            ansNo: "Nuestros procesos están automatizados", 
+            problem: "Se desperdicia energía y presupuesto en tareas de carga manual que no agregan valor real al core del negocio.", 
+            opp: "Liberar la capacidad operativa del equipo para que se enfoque en la expansión comercial o en la mejora del servicio al cliente." 
+        },
+        { 
+            title: "Fragmentación de información",
+            q: "¿La información crítica vive en distintos archivos o herramientas que no se conectan?", 
+            ansYes: "Sí, la información está dispersa", 
+            ansNo: "Tenemos todo centralizado y conectado", 
+            problem: "La desarticulación de datos aumenta el riesgo de errores costosos y obliga a duplicar el trabajo administrativo diario.", 
+            opp: "Unificar la operación para obtener una visión integral del negocio en tiempo real, eliminando el margen de error manual." 
+        },
+        { 
+            title: "Déficit de control estratégico",
+            q: "¿Es difícil obtener datos de stock o rentabilidad al instante sin procesos manuales?", 
+            ansYes: "Sí, es difícil ver los números hoy mismo", 
+            ansNo: "Vemos el estado del negocio al instante", 
+            problem: "Gestionar sin datos actualizados impide reaccionar con rapidez a los cambios del mercado y genera una toma de decisiones a ciegas.", 
+            opp: "Contar con tableros de control automáticos que muestren la salud real de la empresa para liderar con total previsibilidad." 
+        },
+        { 
+            title: "Tope Operativo",
+            q: "¿Viven 'apagando incendios' operativos en lugar de planificar el crecimiento?", 
+            ansYes: "Sí, vivimos resolviendo urgencias diarias", 
+            ansNo: "Estamos enfocados en escalar el negocio", 
+            problem: "La estructura actual ya no soporta más carga de trabajo. Las urgencias consumen la energía necesaria para planificar el escalamiento.", 
+            opp: "Construir una base tecnológica sólida que absorba el trabajo pesado y habilite una expansión ordenada y sin caos administrativo." 
+        }
     ];
 
     let currentStep = 0; let score = 0; let userRisksIndexes = [];
@@ -116,7 +151,7 @@
         const industry = document.getElementById('userIndustry').value;
 
         doc.setFont("helvetica", "bold"); doc.setFontSize(22); doc.text("Informe de Tope Operativo 2026", 20, 25);
-        doc.setFontSize(10); doc.setFont("helvetica", "normal"); doc.text(`Preparado para: ${name} | Empresa: ${company} | Rubro: ${industry}`, 20, 33);
+        doc.setFontSize(10); doc.setFont("helvetica", "normal"); doc.text(`Aura Partner Tecnológico | Preparado para: ${name} | Empresa: ${company}`, 20, 33);
         doc.setDrawColor(0, 52, 235); doc.line(20, 38, 190, 38);
 
         let y = 55;
@@ -125,10 +160,13 @@
 
         userRisksIndexes.forEach(idx => {
             const item = questions[idx];
+            doc.setFontSize(11); doc.setTextColor(0); doc.setFont("helvetica", "bold");
+            doc.text(item.title, 20, y);
+            y += 4;
             // Recuadro Naranja (Problema)
             doc.setDrawColor(255, 140, 0); doc.setFillColor(255, 245, 230); doc.rect(20, y, 170, 15, 'F');
             doc.setFontSize(9); doc.setTextColor(150, 80, 0); doc.setFont("helvetica", "bold");
-            doc.text("Área a mejorar:", 25, y + 6);
+            doc.text("Situación crítica:", 25, y + 6);
             doc.setFont("helvetica", "normal"); doc.text(doc.splitTextToSize(item.problem, 150), 25, y + 10);
             y += 18;
             // Recuadro Verde (Oportunidad)
@@ -136,18 +174,18 @@
             doc.setTextColor(30, 80, 30); doc.setFont("helvetica", "bold");
             doc.text("Oportunidad:", 25, y + 6);
             doc.setFont("helvetica", "normal"); doc.text(doc.splitTextToSize(item.opp, 150), 25, y + 10);
-            y += 22;
+            y += 25;
             if(y > 250) { doc.addPage(); y = 20; }
         });
 
-        // Metodología Aura
+        // Metodología Aura basada en la estrategia [cite: 522-528]
         doc.setTextColor(0); doc.setFontSize(14); doc.setFont("helvetica", "bold");
         doc.text("Cómo Aura puede ayudarte:", 20, y + 5); y += 15;
         doc.setFontSize(10); doc.setFont("helvetica", "normal");
-        const auraMethod = "En Aura somos tu partner tecnológico estratégico[cite: 33]. Nuestro método se enfoca en destrabar tu crecimiento en tres pasos: \n\n1. Diagnóstico del tope operativo para entender dónde se frena el negocio[cite: 522].\n2. Diseño de una solución técnica alineada a tu lógica comercial real[cite: 526].\n3. Desarrollo de software a medida para devolverte el orden y el foco[cite: 528].";
+        const auraMethod = "En Aura somos tu partner tecnológico estratégico para superar el tope operativo. Nuestro método de trabajo se divide en tres etapas fundamentales para asegurar el impacto positivo:\n\n1. Diagnóstico del tope operativo: Analizamos cómo funciona hoy el negocio e identificamos los puntos donde la operación deja de escalar.\n2. Diseño de la solución: Definimos los procesos y una solución tecnológica alineada a la realidad comercial del negocio.\n3. Desarrollo e implementación: Construimos el software a medida y analizamos el uso real para asegurar que la herramienta ordene la operación y habilite el crecimiento.";
         doc.text(doc.splitTextToSize(auraMethod, 170), 20, y);
 
-        y += 40; doc.setFillColor(235, 242, 255); doc.rect(20, y, 170, 25, 'F');
+        y += 50; doc.setFillColor(235, 242, 255); doc.rect(20, y, 170, 25, 'F');
         doc.setFontSize(11); doc.setTextColor(0, 52, 235); doc.setFont("helvetica", "bold");
         doc.text("Agendá tu asesoría técnica gratuita con Gonzalo:", 30, y + 10);
         doc.setFontSize(9); doc.text("https://cal.com/gonzalo-izquierdo-brown/30min", 30, y + 17);
